@@ -4,9 +4,9 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/empty_button"
+        android:id="@+id/error_button"
         android:layout_gravity="center"
-        android:text="no data,click and retry"
+        android:text="error,click and retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

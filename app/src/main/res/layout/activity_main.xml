@@ -49,9 +49,13 @@
 
     <com.drgonfly.kotlinapp.view.state.StateLayout
         android:id="@+id/state_layout"
-        android:background="@color/colorAccent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:baselineAligned="false"
+        app:empty_layout="@layout/empty_view"
+        app:error_layout="@layout/error_view"
+        app:loading_layout="@layout/loading_view"
+        app:offline_layout="@layout/offline_view">
 
         <TextView
             android:layout_width="match_parent"

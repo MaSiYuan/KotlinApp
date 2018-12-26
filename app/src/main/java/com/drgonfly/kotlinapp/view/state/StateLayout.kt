@@ -11,7 +11,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import com.drgonfly.kotlinapp.R
 
-class StateLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
+open class StateLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     companion object {
         const val DEFAULT_LOADING_ID = -1
@@ -24,6 +24,13 @@ class StateLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context,
         var cfgErrorId: Int = DEFAULT_ERROR_ID
         var cfgOfflineId: Int = DEFAULT_OFFLINE_ID
 
+        /**
+         * config the global state view id.
+         * @param loadingId loading view id
+         * @param emptyId empty view id
+         * @param errorId error view id
+         * @param offlineId offline view id
+         */
         fun configStateId(loadingId: Int = DEFAULT_LOADING_ID, emptyId: Int = DEFAULT_EMPTY_ID,
                           errorId: Int = DEFAULT_ERROR_ID, offlineId: Int = DEFAULT_OFFLINE_ID) {
             cfgLoadingId = loadingId
@@ -43,8 +50,10 @@ class StateLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context,
 
     private var listener: OnStateViewClickedListener? = null
 
+    private lateinit var childMap: HashMap<Int, View>
+
     init {
-        val array: TypedArray = context.obtainStyledAttributes(R.styleable.StateLayout)
+        val array: TypedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.StateLayout, 0, 0)
         val loadingId = array.getResourceId(R.styleable.StateLayout_loading_layout, DEFAULT_LOADING_ID)
         val emptyId = array.getResourceId(R.styleable.StateLayout_empty_layout, DEFAULT_EMPTY_ID)
         val errorId = array.getResourceId(R.styleable.StateLayout_error_layout, DEFAULT_ERROR_ID)
@@ -61,30 +70,74 @@ class StateLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context,
         offlineView?.setOnClickListener { listener?.onOfflineClicked() }
     }
 
-    fun setOnStateViewChildClickedListener(vararg childIds:Int){
+    /**
+     * Set the state view children's click listener.
+     * @param listener the listener
+     * @param childIds children's id
+     */
+    fun setOnStateChildClickedListener(listener: OnStateViewChildClickedListener?, vararg childIds: Int) {
+        childMap = HashMap()
 
+        for (childId in childIds) {
+            val view: View? = when {
+                emptyView?.findViewById<View>(childId) != null -> emptyView?.findViewById(childId)
+                errorView?.findViewById<View>(childId) != null -> errorView?.findViewById(childId)
+                else -> offlineView?.findViewById(childId)
+            }
+            if (view != null) {
+                childMap[childId] = view
+            }
+        }
+
+        for (key in childMap.keys) {
+            childMap[key]?.setOnClickListener { listener?.onChildClicked(key, childMap[key]) }
+        }
     }
 
+    /**
+     * Set the state view's click listener.
+     * @param listener the listener of state view
+     */
     fun setOnStateViewClickedListener(listener: OnStateViewClickedListener?) {
         this.listener = listener
     }
 
+    /**
+     * Show loading state view.
+     * @param witAnimation if show the view with animation
+     */
     fun showLoading(witAnimation: Boolean = false) {
         showStateView(loadingView, witAnimation)
     }
 
+    /**
+     * Show empty state view.
+     * @param witAnimation if show the view with animation
+     */
     fun showEmpty(witAnimation: Boolean = false) {
         showStateView(emptyView, witAnimation)
     }
 
+    /**
+     * Show error state view.
+     * @param witAnimation if show the view with animation
+     */
     fun showError(witAnimation: Boolean = false) {
         showStateView(errorView, witAnimation)
     }
 
+    /**
+     * Show offline state view.
+     * @param witAnimation if show the view with animation
+     */
     fun showOffline(witAnimation: Boolean = false) {
         showStateView(offlineView, witAnimation)
     }
 
+    /**
+     * Show success state view.
+     * @param witAnimation if show the view with animation
+     */
     fun showContent(witAnimation: Boolean = false) {
         removeStateView()
         showChildren(witAnimation)
@@ -181,9 +234,30 @@ class StateLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context,
     }
 
     interface OnStateViewClickedListener {
+        /**
+         * when the empty state view being clicked,this method will be call.
+         */
         fun onEmptyClicked()
+
+        /**
+         * when the error state view being clicked,this method will be call.
+         */
         fun onErrorClicked()
+
+        /**
+         * when the offline state view being clicked,this method will be call.
+         */
         fun onOfflineClicked()
+    }
+
+    interface OnStateViewChildClickedListener {
+
+        /**
+         * when the state view's subview being clicked,this method will be call.
+         * @param childId id of the subview being clicked
+         * @param view subview being clicked
+         */
+        fun onChildClicked(childId: Int, view: View?)
     }
 
 }
