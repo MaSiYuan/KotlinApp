@@ -1,0 +1,10 @@
+<resources>
+
+    <declare-styleable name="StateLayout">
+        <attr name="loading_layout" format="integer" />
+        <attr name="empty_layout" format="integer" />
+        <attr name="offline_layout" format="integer" />
+        <attr name="error_layout" format="integer" />
+    </declare-styleable>
+
+</resources>
