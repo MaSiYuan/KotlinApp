@@ -79,11 +79,17 @@
         android:layout_margin="10dp"
         android:background="@color/colorAccent"
         android:padding="10dp"
-        android:visibility="visible"
-        app:text_color="@color/colorPrimary"
+        android:visibility="gone"
         app:img_height="140dp"
         app:img_width="200dp"
         app:padding_with_text="10dp"
+        app:text_color="@color/colorPrimary"
         app:text_size="14sp" />
+
+
+    <com.drgonfly.kotlinapp.view.image.CircleImage
+        android:id="@+id/circle_img"
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
 
 </LinearLayout>

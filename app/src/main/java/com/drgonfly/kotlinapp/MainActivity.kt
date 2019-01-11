@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.drgonfly.kotlinapp.util.Utils
 import com.drgonfly.kotlinapp.view.state.StateLayout
 import com.drgonfly.kotlinapp.view.text.ImgTextView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -35,6 +37,9 @@ class MainActivity : AppCompatActivity(), StateLayout.OnStateViewChildClickedLis
                 iv.setImageResource(R.drawable.ic_launcher_foreground)
             }
         })
+
+        circle_img.setImageBitmap(Utils.getAvatar(600, R.drawable.head, this))
+//        Glide.with(this).load(Utils.getAvatar(600, R.drawable.head, this)).into(circle_img)
     }
 
     override fun onChildClicked(childId: Int, view: View?) {

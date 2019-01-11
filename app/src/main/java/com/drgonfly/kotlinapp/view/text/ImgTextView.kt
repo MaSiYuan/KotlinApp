@@ -10,7 +10,6 @@ import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.ImageView
 import com.drgonfly.kotlinapp.R
-import com.drgonfly.kotlinapp.util.Utils
 
 class ImgTextView(ctx: Context, attr: AttributeSet) : FrameLayout(ctx, attr) {
 
