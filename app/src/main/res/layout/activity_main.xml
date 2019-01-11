@@ -73,9 +73,17 @@
     </com.drgonfly.kotlinapp.view.state.StateLayout>
 
     <com.drgonfly.kotlinapp.view.text.ImgTextView
+        android:id="@+id/img_text"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="240dp"
         android:layout_margin="10dp"
-        android:background="@color/colorAccent" />
+        android:background="@color/colorAccent"
+        android:padding="10dp"
+        android:visibility="visible"
+        app:text_color="@color/colorPrimary"
+        app:img_height="140dp"
+        app:img_width="200dp"
+        app:padding_with_text="10dp"
+        app:text_size="14sp" />
 
 </LinearLayout>
