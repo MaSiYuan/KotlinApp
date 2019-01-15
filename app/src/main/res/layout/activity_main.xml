@@ -86,10 +86,11 @@
         app:text_color="@color/colorPrimary"
         app:text_size="14sp" />
 
-
     <com.drgonfly.kotlinapp.view.image.CircleImage
+        android:layout_margin="20dp"
+        android:src="@drawable/head"
         android:id="@+id/circle_img"
-        android:layout_width="200dp"
-        android:layout_height="200dp" />
+        android:layout_width="301dp"
+        android:layout_height="300dp" />
 
 </LinearLayout>

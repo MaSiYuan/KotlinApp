@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), StateLayout.OnStateViewChildClickedLis
             }
         })
 
-        circle_img.setImageBitmap(Utils.getAvatar(600, R.drawable.head, this))
+//        circle_img.setImageBitmap(Utils.getAvatar(600, R.drawable.head, this))
 //        Glide.with(this).load(Utils.getAvatar(600, R.drawable.head, this)).into(circle_img)
     }
 

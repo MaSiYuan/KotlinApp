@@ -2,10 +2,12 @@ package com.drgonfly.kotlinapp.view.image
 
 import android.content.Context
 import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v7.widget.AppCompatImageView
 import android.util.AttributeSet
+import com.drgonfly.kotlinapp.util.Utils
 
 class CircleImage(ctx: Context, attr: AttributeSet) : AppCompatImageView(ctx, attr) {
 
@@ -20,12 +22,16 @@ class CircleImage(ctx: Context, attr: AttributeSet) : AppCompatImageView(ctx, at
     var bitmap: Bitmap? = null
 
     init {
-
     }
 
-    override fun setImageBitmap(bm: Bitmap?) {
-//        super.setImageBitmap(bm)
-        this.bitmap = bm
+    override fun setImageDrawable(drawable: Drawable?) {
+        super.setImageDrawable(drawable)
+        bitmap = Utils.drawable2Bitmap(drawable!!)
+    }
+
+    override fun setImageResource(resId: Int) {
+        super.setImageResource(resId)
+        bitmap = Utils.drawable2Bitmap(drawable!!)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -40,11 +46,21 @@ class CircleImage(ctx: Context, attr: AttributeSet) : AppCompatImageView(ctx, at
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
+//        super.onDraw(canvas)
 
-        canvas?.drawCircle(centerX, centerY, radius, paint)
         val saved: Int? = canvas?.saveLayer(savedArea, paint)
-        canvas?.drawCircle(centerX, centerY, radius-10, paint)
+
+        //draw circle image
+//        canvas?.drawCircle(centerX, centerY, radius, paint)
+
+        //draw circle image border
+//        val saved: Int? = canvas?.saveLayer(savedArea, paint)
+//        canvas?.drawCircle(centerX, centerY, radius-10, paint)
+
+        //draw round rect image
+        canvas?.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(),
+                Utils.dp2px(20f), Utils.dp2px(20f), paint)
+
         paint.xfermode = xfermode
         canvas?.drawBitmap(bitmap!!, 0f, 0f, paint)
         paint.xfermode = null
